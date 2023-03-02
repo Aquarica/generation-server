@@ -11,7 +11,6 @@ import {config} from 'dotenv';
 config()
 
 const configuration = new Configuration({
-    organization: "org-HgBUl1nua3IBuDMkH8dYQLZJ",
     apiKey: process.env.OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
@@ -25,11 +24,13 @@ const app = express();
 app.use(express.json());
 app.post('/generate', async (req, res) => {
   // Add call to OpenAI based on the input
+  console.log(req.body)
+  console.log(req.body.text)
   const response = await openai.createCompletion({
     model: "text-davinci-003",
     prompt: req.body.text,
     max_tokens: 20,
-    temperature: 0,
+    temperature: .4,
   });
 	res.send({text:req.body.text+response.data.choices[0].text});
 
